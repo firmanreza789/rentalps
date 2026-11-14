@@ -30,9 +30,7 @@ Setiap unit stasiun yang terdaftar terhubung langsung dengan kategori konsol mel
 ## Struktur Direktori
 
 ```text
-.
-├── logs/
-│   └── db_error.log       
+.   
 ├── 244242008.sql          
 ├── config.php             
 ├── database.sql           
