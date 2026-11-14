@@ -1,0 +1,7 @@
+# File Log Error Database (Jangan di-commit ke Git demi privasi server)
+logs/*.log
+
+# File Konfigrasi Lokal / Environment
+.env
+.DS_Store
+Thumbs.db
