@@ -30,7 +30,9 @@ Setiap unit stasiun yang terdaftar terhubung langsung dengan kategori konsol mel
 ## Struktur Direktori
 
 ```text
-.   
+.
+├── assets/
+│   └── style.css    
 ├── 244242008.sql          
 ├── config.php             
 ├── database.sql           

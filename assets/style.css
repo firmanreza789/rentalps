@@ -1,0 +1,57 @@
+:root {
+    --ps-blue: #003791;
+    --ps-dark: #0f172a;
+    --ps-accent: #0070d1;
+}
+
+body {
+    background-color: #f1f5f9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #334155;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-custom {
+    background: linear-gradient(135deg, var(--ps-dark) 0%, var(--ps-blue) 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    background: #ffffff;
+}
+
+.badge-tersedia {
+    background-color: #10b981;
+    color: #ffffff;
+}
+
+.badge-main {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.badge-maintenance {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+.table th {
+    font-weight: 600;
+    background-color: #f8fafc;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 1.25rem 0;
+    font-size: 0.9rem;
+    color: #64748b;
+}
