@@ -2,7 +2,7 @@
 
 Aplikas manajemen inventaris dan pemantauan stasiun rental PlayStation berbasis PHP 8 Native (PDO) dan MySQL. Proyek ini dibuat untuk mencatat daftar unit konsol, memantau status ketersediaan meja bermain secara real-time, serta mengelola tarif sewa per jam berdasarkan kategori konsol.
 
-Setiap unit stasiun yang terdaftar terhubung langsung dengan kategori konsol melalui relasi database. Pengelola dapat memantau ringkasan jumlah unit yang tersedia, sedang dimainkan, maupun dalam perbaikan (maintenance), serta memperbarui status operasional stasiun dengan cepat melalui antarmuka dasbor.
+Setiap unt stasiun yang terdaftar terhubung langsung dengan kategori konsol melalui relasi database. Pengelola dapat memantau ringkasan jumlah unit yang tersedia, sedang dimainkan, maupun dalam perbaikan (maintenance), serta memperbarui status operasional stasiun dengan cepat melalui antarmuka dasbor.
 
 ## Fitur Utama
 
@@ -25,7 +25,7 @@ Setiap unit stasiun yang terdaftar terhubung langsung dengan kategori konsol mel
 - Menerapkan proteksi integritas relasi (`ON DELETE RESTRICT`) yang menolak penghapusan kategori apabila masih digunakan oleh unit aktif.
 
 ### Penghapusan Unit (`hapus.php` & `footer.php`)
-- Penghapusan data unit dilengkapi dialog modal konfirmasi interaktif dan dieksekusi menggunakan metode `POST`.
+- Penghapusa data unit dilengkapi dialog modal konfirmasi interaktif dan dieksekusi menggunakan metode `POST`.
 
 ## Struktur Direktori
 
