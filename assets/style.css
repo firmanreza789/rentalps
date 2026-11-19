@@ -1,57 +1,246 @@
-:root {
-    --ps-blue: #003791;
-    --ps-dark: #0f172a;
-    --ps-accent: #0070d1;
-}
-
+/* css sederhana buatan sorangan tanpa framework */
 body {
-    background-color: #f1f5f9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #334155;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: #f2f2f2;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #2b4c7e;
+    color: #fff;
+    padding: 12px 20px;
+}
+
+.header-isi {
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.navbar-custom {
-    background: linear-gradient(135deg, var(--ps-dark) 0%, var(--ps-blue) 100%);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.judul-web {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
 }
 
-.card-custom {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-    background: #ffffff;
+.menu a {
+    color: #dce6f5;
+    text-decoration: none;
+    margin-left: 14px;
+    font-size: 14px;
 }
 
-.badge-tersedia {
-    background-color: #10b981;
-    color: #ffffff;
+.menu a:hover,
+.menu a.aktif {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
-.badge-main {
-    background-color: #f59e0b;
-    color: #ffffff;
+.wadah {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
 }
 
-.badge-maintenance {
-    background-color: #ef4444;
-    color: #ffffff;
+h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
 }
 
-.table th {
-    font-weight: 600;
-    background-color: #f8fafc;
-    color: #475569;
-    border-bottom: 2px solid #e2e8f0;
+h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.info-ringkas {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.pesan-sukses {
+    background-color: #dff0d8;
+    border: 1px solid #b2dba1;
+    color: #2d662d;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.pesan-error {
+    background-color: #f8d7da;
+    border: 1px solid #e6b3b8;
+    color: #842029;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.form-cari {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.form-cari input[type="text"],
+.form-cari select {
+    padding: 6px 8px;
+    border: 1px solid #bbb;
+    font-size: 14px;
+}
+
+.form-cari input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+table th {
+    background-color: #eaeaea;
+}
+
+.tabel-scroll {
+    overflow-x: auto;
+}
+
+.teks-kecil {
+    font-size: 12px;
+    color: #666;
+}
+
+.status-tersedia {
+    color: #198754;
+    font-weight: bold;
+}
+
+.status-main {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.status-rusak {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #999;
+    background-color: #eee;
+    color: #222;
+    text-decoration: none;
+}
+
+.btn-biru {
+    background-color: #2b4c7e;
+    border-color: #223d66;
+    color: #fff;
+}
+
+.btn-merah {
+    background-color: #c9302c;
+    border-color: #ac2925;
+    color: #fff;
+}
+
+.btn-kecil {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.form-grup {
+    margin-bottom: 12px;
+}
+
+.form-grup label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.form-grup input[type="text"],
+.form-grup input[type="number"],
+.form-grup select,
+.form-grup textarea {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #bbb;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.kotak-form {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
 .footer {
-    margin-top: auto;
-    background-color: #ffffff;
-    border-top: 1px solid #e2e8f0;
-    padding: 1.25rem 0;
-    font-size: 0.9rem;
-    color: #64748b;
+    max-width: 900px;
+    margin: 15px auto 25px auto;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+
+/* modal konfirmasi hapus sederhana tanpa library luar */
+.modal-latar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modal-kotak {
+    background-color: #fff;
+    max-width: 380px;
+    margin: 120px auto;
+    padding: 18px;
+    border: 1px solid #888;
+}
+
+.modal-kotak h3 {
+    margin-top: 0;
+    color: #c9302c;
+}
+
+.modal-tombol {
+    margin-top: 15px;
+    text-align: right;
 }

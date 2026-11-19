@@ -16,7 +16,7 @@ $jmlKat = 0;
 
 if ($pdo) {
     try {
-        // ngitung jumlah data buat kartu statistik di luhur
+        // ngitung jumlah data buat ringkesan di luhur
         $jmlUnit  = $pdo->query("SELECT COUNT(*) FROM unit_rental")->fetchColumn();
         $jmlReady = $pdo->query("SELECT COUNT(*) FROM unit_rental WHERE status = 'Tersedia'")->fetchColumn();
         $jmlMain  = $pdo->query("SELECT COUNT(*) FROM unit_rental WHERE status = 'Sedang Main'")->fetchColumn();
@@ -56,186 +56,94 @@ if ($pdo) {
 }
 ?>
 
-<div class="container py-4">
-    <div class="mb-4">
-        <h2 class="fw-bold mb-1 text-dark">
-            <i class="bi bi-controller text-primary me-2"></i>Daftar Unit PlayStation
-        </h2>
-        <p class="text-muted mb-0">Kelola ketersediaan station, tarif sewa, dan kondisi unit rental secara realtime.</p>
-    </div>
+<h2>Daftar Rental PlayStation</h2>
 
-    <!-- 4 kotak ringkesan statistik -->
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-lg-3">
-            <div class="card card-custom p-3 border-start border-primary border-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-muted small fw-semibold">Total Unit PS</span>
-                        <h3 class="fw-bold mb-0 text-dark"><?= $jmlUnit; ?></h3>
-                    </div>
-                    <div class="fs-2 text-primary opacity-50"><i class="bi bi-tv"></i></div>
-                </div>
-            </div>
-        </div>
+<!-- ringkesan jumlah data -->
+<div class="info-ringkas">
+    Total Data: <b><?= $jmlUnit; ?></b> |
+    Tersedia: <b><?= $jmlReady; ?></b> |
+    Sedang Main: <b><?= $jmlMain; ?></b> |
+    Tipe Konsol: <b><?= $jmlKat; ?></b>
+</div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card card-custom p-3 border-start border-success border-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-muted small fw-semibold">Unit Tersedia</span>
-                        <h3 class="fw-bold mb-0 text-success"><?= $jmlReady; ?></h3>
-                    </div>
-                    <div class="fs-2 text-success opacity-50"><i class="bi bi-check2-circle"></i></div>
-                </div>
-            </div>
-        </div>
+<!-- form neangan data jeung filter -->
+<form method="GET" action="index.php" class="form-cari">
+    <input type="text" name="search" placeholder="Cari kode, nama, atau tipe PS..." value="<?= htmlspecialchars($cari); ?>">
+    <select name="status">
+        <option value="">-- Semua Status --</option>
+        <option value="Tersedia" <?= $filterStatus === 'Tersedia' ? 'selected' : ''; ?>>Tersedia</option>
+        <option value="Sedang Main" <?= $filterStatus === 'Sedang Main' ? 'selected' : ''; ?>>Sedang Main</option>
+        <option value="Maintenance" <?= $filterStatus === 'Maintenance' ? 'selected' : ''; ?>>Maintenance</option>
+    </select>
+    <button type="submit" class="btn btn-biru">Cari</button>
+    <?php if ($cari !== '' || $filterStatus !== ''): ?>
+        <a href="index.php" class="btn">Reset</a>
+    <?php endif; ?>
+    <a href="tambah.php" class="btn btn-biru">+ Tambah</a>
+</form>
 
-        <div class="col-6 col-lg-3">
-            <div class="card card-custom p-3 border-start border-warning border-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-muted small fw-semibold">Sedang Main</span>
-                        <h3 class="fw-bold mb-0 text-warning"><?= $jmlMain; ?></h3>
-                    </div>
-                    <div class="fs-2 text-warning opacity-50"><i class="bi bi-clock-history"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-lg-3">
-            <div class="card card-custom p-3 border-start border-info border-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-muted small fw-semibold">Tipe Konsol</span>
-                        <h3 class="fw-bold mb-0 text-info"><?= $jmlKat; ?></h3>
-                    </div>
-                    <div class="fs-2 text-info opacity-50"><i class="bi bi-grid-3x3-gap"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- form neangan data jeung filter -->
-    <div class="card card-custom p-3 mb-4">
-        <form method="GET" action="index.php" class="row g-2 align-items-center">
-            <div class="col-md-5">
-                <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0">
-                        <i class="bi bi-search text-muted"></i>
-                    </span>
-                    <input type="text" name="search" class="form-control border-start-0 bg-light"
-                           placeholder="Cari kode unit, nama station, atau tipe konsol..."
-                           value="<?= htmlspecialchars($cari); ?>">
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <select name="status" class="form-select bg-light">
-                    <option value="">-- Semua Status Ketersediaan --</option>
-                    <option value="Tersedia" <?= $filterStatus === 'Tersedia' ? 'selected' : ''; ?>>Tersedia</option>
-                    <option value="Sedang Main" <?= $filterStatus === 'Sedang Main' ? 'selected' : ''; ?>>Sedang Main</option>
-                    <option value="Maintenance" <?= $filterStatus === 'Maintenance' ? 'selected' : ''; ?>>Maintenance</option>
-                </select>
-            </div>
-
-            <div class="col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-dark w-100 fw-semibold">
-                    <i class="bi bi-funnel me-1"></i> Cari / Filter
-                </button>
-                <?php if ($cari !== '' || $filterStatus !== ''): ?>
-                    <a href="index.php" class="btn btn-outline-secondary" title="Reset Pencarian">
-                        <i class="bi bi-arrow-counterclockwise"></i>
-                    </a>
-                <?php endif; ?>
-            </div>
-        </form>
-    </div>
-
-    <!-- tabel daptar unit rental -->
-    <div class="card card-custom overflow-hidden mb-4">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead>
+<!-- tabel daptar unit rental -->
+<div class="tabel-scroll">
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode</th>
+                <th>Nama Penyewa / Station</th>
+                <th>Tipe Konsol</th>
+                <th>Tarif/Jam</th>
+                <th>Stik</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($units)): ?>
+                <?php $no = 1; foreach ($units as $u): ?>
                     <tr>
-                        <th class="ps-3" style="width: 100px;">Kode</th>
-                        <th>Station & Fasilitas</th>
-                        <th>Tipe Konsol</th>
-                        <th>Tarif Sewa</th>
-                        <th>Stik</th>
-                        <th>Status</th>
-                        <th class="text-end pe-3" style="width: 140px;">Aksi</th>
+                        <td><?= $no++; ?></td>
+                        <!-- pake htmlspecialchars meh aman tina serangan script XSS -->
+                        <td><b><?= htmlspecialchars($u['kode_unit']); ?></b></td>
+                        <td>
+                            <?= htmlspecialchars($u['nama_station']); ?><br>
+                            <span class="teks-kecil">
+                                Kondisi: <?= htmlspecialchars($u['kondisi']); ?>
+                                <?= !empty($u['catatan']) ? ' - ' . htmlspecialchars($u['catatan']) : ''; ?>
+                            </span>
+                        </td>
+                        <td><?= htmlspecialchars($u['nama_kategori']); ?></td>
+                        <td><?= format_rupiah($u['tarif_per_jam']); ?></td>
+                        <td><?= (int)$u['jumlah_stik']; ?></td>
+                        <td>
+                            <?php if ($u['status'] === 'Tersedia'): ?>
+                                <span class="status-tersedia">Tersedia</span>
+                            <?php elseif ($u['status'] === 'Sedang Main'): ?>
+                                <span class="status-main">Sedang Main</span>
+                            <?php else: ?>
+                                <span class="status-rusak">Maintenance</span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <a href="edit.php?id=<?= $u['id_unit']; ?>" class="btn btn-biru btn-kecil">Edit</a>
+                            <button type="button" class="btn btn-merah btn-kecil"
+                                    data-id="<?= $u['id_unit']; ?>"
+                                    data-kode="<?= htmlspecialchars($u['kode_unit']); ?>"
+                                    data-nama="<?= htmlspecialchars($u['nama_station']); ?>"
+                                    onclick="bukaModalHapus(this)">
+                                Hapus
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($units)): ?>
-                        <?php foreach ($units as $u): ?>
-                            <tr>
-                                <!-- pake htmlspecialchars meh aman tina serangan script XSS -->
-                                <td class="ps-3 fw-bold text-primary font-monospace">
-                                    <?= htmlspecialchars($u['kode_unit']); ?>
-                                </td>
-                                <td>
-                                    <div class="fw-semibold text-dark">
-                                        <?= htmlspecialchars($u['nama_station']); ?>
-                                    </div>
-                                    <small class="text-muted">
-                                        Kondisi: <?= htmlspecialchars($u['kondisi']); ?>
-                                        <?= !empty($u['catatan']) ? ' &bull; ' . htmlspecialchars($u['catatan']) : ''; ?>
-                                    </small>
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark border">
-                                        <?= htmlspecialchars($u['nama_kategori']); ?>
-                                    </span>
-                                </td>
-                                <td class="fw-semibold text-success">
-                                    <?= format_rupiah($u['tarif_per_jam']); ?> <small class="text-muted fw-normal">/jam</small>
-                                </td>
-                                <td>
-                                    <span class="badge bg-secondary-subtle text-secondary border">
-                                        <i class="bi bi-dpad-fill me-1"></i><?= (int)$u['jumlah_stik']; ?> Stik
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php if ($u['status'] === 'Tersedia'): ?>
-                                        <span class="badge badge-tersedia px-2 py-1"><i class="bi bi-check-circle me-1"></i>Tersedia</span>
-                                    <?php elseif ($u['status'] === 'Sedang Main'): ?>
-                                        <span class="badge badge-main px-2 py-1"><i class="bi bi-play-circle me-1"></i>Sedang Main</span>
-                                    <?php else: ?>
-                                        <span class="badge badge-maintenance px-2 py-1"><i class="bi bi-tools me-1"></i>Maintenance</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="edit.php?id=<?= $u['id_unit']; ?>" class="btn btn-outline-primary" title="Edit Data">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalHapus"
-                                                data-id="<?= $u['id_unit']; ?>"
-                                                data-kode="<?= htmlspecialchars($u['kode_unit']); ?>"
-                                                data-nama="<?= htmlspecialchars($u['nama_station']); ?>"
-                                                title="Hapus Data">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="7" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
-                                <span class="fw-semibold">Belum ada data unit yang cocok.</span>
-                                <p class="small text-secondary mb-0">Coba ubah kata kunci pencarian atau tambahkan unit baru.</p>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 20px;">
+                        Belum ada data yang cocok.
+                    </td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </div>
 
 <?php

@@ -1,5 +1,5 @@
 <?php
-$page_title = "Tambah Unit PlayStation Baru";
+$page_title = "Tambah Data Rental PS";
 require_once __DIR__ . '/header.php';
 
 // bukak konek ka databse
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $catatan = trim($_POST['catatan'] ?? '');
 
     if ($kode === '' || $nama === '' || $idKat === '') {
-        $err = "Kode Unit, Nama Station, dan Tipe Konsol wajib diisi ya!";
+        $err = "Kode Unit, Nama Penyewa/Station, dan Tipe Konsol wajib diisi ya!";
     } elseif ((int)$stik < 1) {
         $err = "Jumlah stik minimal harus 1!";
     } elseif ($pdo) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
 
                 // simpen pesen sukses terus balikkeun ka index.php
-                $_SESSION['pesan_sukses'] = "Unit PS baru (" . strtoupper($kode) . ") berhasil disimpan!";
+                $_SESSION['pesan_sukses'] = "Data rental baru (" . strtoupper($kode) . ") berhasil disimpan!";
                 header("Location: index.php");
                 exit;
             }
@@ -78,104 +78,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+<h2>Tambah Data Rental PS</h2>
 
-            <a href="index.php" class="text-decoration-none text-secondary mb-3 d-inline-block">
-                <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Unit
-            </a>
+<?php if ($err !== ''): ?>
+    <div class="pesan-error"><?= htmlspecialchars($err); ?></div>
+<?php endif; ?>
 
-            <div class="card card-custom p-4">
-                <div class="border-bottom pb-3 mb-4">
-                    <h3 class="fw-bold mb-1 text-dark">
-                        <i class="bi bi-plus-circle text-primary me-2"></i>Tambah Unit PlayStation
-                    </h3>
-                    <p class="text-muted small mb-0">Isi data di bawah untuk mendaftarkan station rental konsol baru.</p>
-                </div>
-
-                <?php if ($err !== ''): ?>
-                    <div class="alert alert-danger alert-dismissible fade show border-0" role="alert">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                        <?= htmlspecialchars($err); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="tambah.php" novalidate>
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <label for="kode_unit" class="form-label fw-semibold">Kode Unit <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kode_unit" name="kode_unit"
-                                   placeholder="Contoh: PS5-03" required
-                                   value="<?= htmlspecialchars($kode); ?>">
-                            <small class="text-muted">Kode unik station.</small>
-                        </div>
-
-                        <div class="col-md-8">
-                            <label for="nama_station" class="form-label fw-semibold">Nama Station & TV <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama_station" name="nama_station"
-                                   placeholder="Contoh: Station VIP 3 (TV 55 Inch)" required
-                                   value="<?= htmlspecialchars($nama); ?>">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="id_kategori" class="form-label fw-semibold">Tipe Konsol <span class="text-danger">*</span></label>
-                            <select class="form-select" id="id_kategori" name="id_kategori" required>
-                                <option value="">-- Pilih Tipe Konsol --</option>
-                                <?php foreach ($listKat as $kat): ?>
-                                    <option value="<?= $kat['id_kategori']; ?>" <?= $idKat == $kat['id_kategori'] ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($kat['nama_kategori']); ?> (<?= format_rupiah($kat['tarif_per_jam']); ?>/jam)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="jumlah_stik" class="form-label fw-semibold">Jumlah Stik</label>
-                            <input type="number" class="form-control" id="jumlah_stik" name="jumlah_stik"
-                                   min="1" max="8" value="<?= htmlspecialchars($stik); ?>">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="kondisi" class="form-label fw-semibold">Kondisi</label>
-                            <select class="form-select" id="kondisi" name="kondisi">
-                                <option value="Sangat Bagus" <?= $kondisi === 'Sangat Bagus' ? 'selected' : ''; ?>>Sangat Bagus</option>
-                                <option value="Bagus" <?= $kondisi === 'Bagus' ? 'selected' : ''; ?>>Bagus</option>
-                                <option value="Cukup" <?= $kondisi === 'Cukup' ? 'selected' : ''; ?>>Cukup</option>
-                                <option value="Perlu Servis" <?= $kondisi === 'Perlu Servis' ? 'selected' : ''; ?>>Perlu Servis</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="status" class="form-label fw-semibold">Status Ketersediaan</label>
-                            <select class="form-select" id="status" name="status">
-                                <option value="Tersedia" <?= $status === 'Tersedia' ? 'selected' : ''; ?>>Tersedia (Siap Disewa)</option>
-                                <option value="Sedang Main" <?= $status === 'Sedang Main' ? 'selected' : ''; ?>>Sedang Main</option>
-                                <option value="Maintenance" <?= $status === 'Maintenance' ? 'selected' : ''; ?>>Maintenance (Perbaikan)</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="catatan" class="form-label fw-semibold">Catatan Tambahan</label>
-                            <input type="text" class="form-control" id="catatan" name="catatan"
-                                   placeholder="Contoh: Game FIFA 24 & Tekken 8 terpasang"
-                                   value="<?= htmlspecialchars($catatan); ?>">
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                        <a href="index.php" class="btn btn-light px-4">Batal</a>
-                        <button type="submit" class="btn btn-primary px-4 fw-semibold">
-                            <i class="bi bi-save me-1"></i> Simpan Unit
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
+<form method="POST" action="tambah.php">
+    <div class="form-grup">
+        <label for="kode_unit">Kode Unit *</label>
+        <input type="text" id="kode_unit" name="kode_unit" placeholder="Contoh: PS5-02" required value="<?= htmlspecialchars($kode); ?>">
     </div>
-</div>
+
+    <div class="form-grup">
+        <label for="nama_station">Nama Penyewa / Station *</label>
+        <input type="text" id="nama_station" name="nama_station" placeholder="Contoh: Firman Reza Alamzah" required value="<?= htmlspecialchars($nama); ?>">
+    </div>
+
+    <div class="form-grup">
+        <label for="id_kategori">Tipe Konsol *</label>
+        <select id="id_kategori" name="id_kategori" required>
+            <option value="">-- Pilih Tipe Konsol --</option>
+            <?php foreach ($listKat as $kat): ?>
+                <option value="<?= $kat['id_kategori']; ?>" <?= $idKat == $kat['id_kategori'] ? 'selected' : ''; ?>>
+                    <?= htmlspecialchars($kat['nama_kategori']); ?> (<?= format_rupiah($kat['tarif_per_jam']); ?>/jam)
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-grup">
+        <label for="jumlah_stik">Jumlah Stik</label>
+        <input type="number" id="jumlah_stik" name="jumlah_stik" min="1" max="8" value="<?= htmlspecialchars($stik); ?>">
+    </div>
+
+    <div class="form-grup">
+        <label for="kondisi">Kondisi Unit</label>
+        <select id="kondisi" name="kondisi">
+            <option value="Sangat Bagus" <?= $kondisi === 'Sangat Bagus' ? 'selected' : ''; ?>>Sangat Bagus</option>
+            <option value="Bagus" <?= $kondisi === 'Bagus' ? 'selected' : ''; ?>>Bagus</option>
+            <option value="Cukup" <?= $kondisi === 'Cukup' ? 'selected' : ''; ?>>Cukup</option>
+            <option value="Perlu Servis" <?= $kondisi === 'Perlu Servis' ? 'selected' : ''; ?>>Perlu Servis</option>
+        </select>
+    </div>
+
+    <div class="form-grup">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+            <option value="Tersedia" <?= $status === 'Tersedia' ? 'selected' : ''; ?>>Tersedia</option>
+            <option value="Sedang Main" <?= $status === 'Sedang Main' ? 'selected' : ''; ?>>Sedang Main</option>
+            <option value="Maintenance" <?= $status === 'Maintenance' ? 'selected' : ''; ?>>Maintenance</option>
+        </select>
+    </div>
+
+    <div class="form-grup">
+        <label for="catatan">Catatan</label>
+        <input type="text" id="catatan" name="catatan" placeholder="Contoh: Main 2 jam" value="<?= htmlspecialchars($catatan); ?>">
+    </div>
+
+    <button type="submit" class="btn btn-biru">Simpan</button>
+    <a href="index.php" class="btn">Batal</a>
+</form>
 
 <?php
 $pdo = null;

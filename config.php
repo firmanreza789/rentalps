@@ -96,26 +96,19 @@ function siapkan_db_awal() {
             ) ENGINE=InnoDB;
         ");
 
-        // lebetkeun data sampel awal meh webna langsung aya isian
+        // lebetkeun data sampel awal meh webna langsung aya isian (2 contoh heula)
         $pdo->exec("
             INSERT INTO kategori_konsol (id_kategori, nama_kategori, tarif_per_jam, deskripsi) VALUES
-            (1, 'PlayStation 5 Disc Edition', 20000, 'Konsol generasi terbaru, support 4K 120Hz & HDR, TV 55 Inch'),
-            (2, 'PlayStation 4 Pro', 12000, 'Resolusi 4K Enhanced, koleksi game petualangan lengkap'),
-            (3, 'PlayStation 4 Slim', 10000, 'Konsol hemat daya, cocok untuk game kasual, eFootball, & FIFA'),
-            (4, 'PlayStation 3 Super Slim', 6000, 'Koleksi game retro & nostalgia (GTA V, PES, Dynasty Warriors)'),
-            (5, 'Nintendo Switch OLED', 15000, 'Party game multiplayer (Mario Kart, Smash Bros, Overcooked)')
+            (1, 'PlayStation 5', 15000, 'TV 43 inch, 2 stik'),
+            (2, 'PlayStation 4', 10000, 'TV 32 inch, game bola & GTA'),
+            (3, 'PlayStation 3', 6000, 'TV 32 inch, game PES')
             ON DUPLICATE KEY UPDATE nama_kategori=VALUES(nama_kategori);
         ");
 
         $pdo->exec("
             INSERT INTO unit_rental (kode_unit, nama_station, id_kategori, jumlah_stik, kondisi, status, catatan) VALUES
-            ('PS5-01', 'Station VIP 1 (Sofa Kulit & TV 55\")', 1, 2, 'Sangat Bagus', 'Sedang Main', 'Sewa paket 3 jam sampai 22:00'),
-            ('PS5-02', 'Station VIP 2 (Audio Surround)', 1, 4, 'Sangat Bagus', 'Tersedia', 'Stik 4 buah siap main bareng'),
-            ('PS4-01', 'Station Reguler A (TV 43\")', 2, 2, 'Bagus', 'Tersedia', 'Update eFootball terbaru'),
-            ('PS4-02', 'Station Reguler B (TV 43\")', 3, 2, 'Bagus', 'Sedang Main', 'Main FIFA 24'),
-            ('PS4-03', 'Station Reguler C (TV 43\")', 3, 2, 'Stik R2 Agak Keras', 'Maintenance', 'Sedang diganti karet tombol stik'),
-            ('PS3-01', 'Station Retro 1 (TV 32\")', 4, 2, 'Bagus', 'Tersedia', 'Game nostalgia lengkap'),
-            ('NSW-01', 'Station Party Switch', 5, 4, 'Sangat Bagus', 'Tersedia', '4 Joycon untuk main ramai-ramai')
+            ('PS5-01', 'Firman Reza Alamzah', 1, 2, 'Bagus', 'Sedang Main', 'Main 2 jam'),
+            ('PS4-01', 'Reza', 2, 2, 'Bagus', 'Tersedia', 'Siap dipakai')
             ON DUPLICATE KEY UPDATE kode_unit=VALUES(kode_unit);
         ");
     } catch (PDOException $e) {
